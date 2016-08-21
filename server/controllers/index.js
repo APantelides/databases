@@ -27,7 +27,7 @@ module.exports = {
   users: {
     // Ditto as above
     get: function (req, res) {
-      res.status(200).send('Shit!');
+      res.status(200).send('');
     },
     post: function (req, res) {
       res.status(201).send();
