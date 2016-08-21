@@ -50,7 +50,7 @@ CREATE TABLE `Messages` (
   `id` INTEGER NOT NULL AUTO_INCREMENT DEFAULT NULL,
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `usernameId` INT DEFAULT NULL,
-  `message` VARCHAR(200) DEFAULT 'NULL',
+  `text` VARCHAR(200) DEFAULT 'NULL',
   `roomId` INTEGER DEFAULT NULL,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -65,7 +65,7 @@ DROP TABLE IF EXISTS `Users`;
     
 CREATE TABLE `Users` (
   `id` INT NULL AUTO_INCREMENT DEFAULT NULL,
-  `name` VARCHAR(15) NULL DEFAULT NULL,
+  `username` VARCHAR(15) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `Rooms`;
     
 CREATE TABLE `Rooms` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `name` VARCHAR(15) NULL DEFAULT NULL,
+  `roomname` VARCHAR(15) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -118,11 +118,11 @@ ALTER TABLE `Rooms_Users` ADD FOREIGN KEY (userId) REFERENCES `Users` (`id`);
 -- Test Data
 -- ---
 
--- INSERT INTO `Messages` (`id`,`createdAt`,`usernameId`,`message`,`roomId`,`updatedAt`) VALUES
--- ('','','','','','');
--- INSERT INTO `Users` (`id`,`name`) VALUES
--- ('','');
--- INSERT INTO `Rooms` (`id`,`name`) VALUES
--- ('','');
--- INSERT INTO `Rooms_Users` (`id`,`roomId`,`userId`) VALUES
--- ('','','');
+INSERT INTO `Users` (`id`,`username`) VALUES
+(null,'Lex');
+INSERT INTO `Rooms` (`id`,`roomname`) VALUES
+(null,'Lobby');
+INSERT INTO `Rooms_Users` (`id`,`roomId`,`userId`) VALUES
+(null,'1','1');
+INSERT INTO `Messages` (`id`,`createdAt`,`usernameId`,`text`,`roomId`,`updatedAt`) VALUES
+(null,CURRENT_TIMESTAMP,'1','arglebargle yo yo yo','1',CURRENT_TIMESTAMP);

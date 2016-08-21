@@ -1,24 +1,42 @@
 var db = require('../db');
 
+
 module.exports = {
   messages: {
-    get: function (done) {
-      db.get().query('SELECT * FROM messages', function (err, rows) {
+    get: function (results) { // a function which produces all the messages
+      db.con.query('SELECT messages.text, users.username, rooms.roomname FROM messages, users, rooms WHERE messages.usernameId = users.id AND messages.roomId = Rooms.id;', function (err, rows) {
         if ( err ) { 
-          return done(err);
-        } else { 
-          done (null, rows); 
+          return results(err);
+        } else {
+          results (null, rows);
         }  
       });
-    }, // a function which produces all the messages
-    post: function (username, message, room, done) {
-      var userID = 'somestuff';//do query to user
+    }, 
+
+    post: function (message, done) {
+      var userName = message.username;
+      var roomName = message.roomname;
       
-      // we promise to write some promises in this general vicinity
+      db.con.query('SELECT id FROM users WHERE username = ?;', userName, function (err, usernameId) {
+        if ( err ) { 
+          throw err;
+        } else {
+          console.log(usernameId, 'should be the userID which is 1!!!');
 
-      var values = [username, message, room];
-
-      db.get().query('INSERT INTO messages (username');
+          db.con.query('SELECT id FROM rooms WHERE roomname = ?;', roomName, function (err, roomnameId) {
+            if (err) {
+              throw err;
+            } else {
+              console.log(roomnameId, 'should be the roomID which is 1!');
+              db.con.query('INSERT INTO messages VALUES (NULL, CURRENT_TIMESTAMP, "?", "?", "?", CURRENT_TIMESTAMP);', [usernameId, message.text, roomnameId], function (err) {
+                console.log(err);
+              } );
+            }
+          });
+        }  
+      });
+      // console.log('guys name is ' + userName);
+      // db.con.query('INSERT INTO messages VALUES ( null, CURRENT_TIMESTAMP, ' + userName + ',' + message.message + ',' + message.roomname );
     } // a function which can be used to insert a message into the database
   },
 
